@@ -8,7 +8,33 @@ namespace Home
 {
     internal class Books
     {
-        public List<Book> BookList { get; set; } //Тут використав list бо надто багато роботи буде якщо використовувати дефолтні масиви
+        private List<Book> BookList { get; set; } //Тут використав list бо надто багато роботи буде якщо використовувати дефолтні масиви
+
+        public Book this[int index] //індексатор
+        {
+            get
+            {
+                if(index >= 0 && index < BookList.Count - 1)
+                {
+                    return BookList[index];
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            set
+            {
+                if (index >= 0 && index < BookList.Count - 1)
+                {
+                    BookList[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+        }
 
         public Books()
         {
@@ -30,21 +56,31 @@ namespace Home
         {
             this.BookList.Add(item);
         }
-        public void Append(Book item)
-        {
-            this.BookList.Append(item);
-        }
+
         public static Books operator +(Books left, Book right)
         {
-            Books books = new Books();
-            books.AddBook(right);
-            return books;
+            if(left != right)
+            {
+                left.AddBook(right);
+                return left;
+            }
+            else
+            {
+                throw new Exception("This Book already exist!");
+            }
         }
         public static Books operator -(Books left, int right)
         {
-            Books books = new Books();
-            books.DeleteByIndex(right);
-            return books;
+            left.BookList.RemoveAt(right);
+            return left;
+        }
+        public static bool operator ==(Books left, Book right)
+        {
+            return left.BookList.Contains(right);
+        }
+        public static bool operator !=(Books left, Book right)
+        {
+            return !(left.BookList.Contains(right));
         }
     }
 }
