@@ -21,9 +21,10 @@ namespace Home
             //Ex3
             Books books = new Books();
             books.BookList = new List<Book>();
-            books.BookList.Append(new Book("Name", "Author", 3434, "Publisher", 34, 12.3));
+            books.AddBook(new Book("Name", "Author", 3434, "Publisher", 34, 12.3));
+            books.Append(new Book("China", "Author", 3434, "Publisher", 34, 12.3));
             //books = books - 0;
-            Console.WriteLine(books.BookList);
+            books.PrintNames();
         }
     }
 }
